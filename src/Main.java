@@ -1,23 +1,173 @@
-import java.sql.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static java.lang.Math.floor;
+import static java.lang.Math.max;
+import static java.lang.Math.pow;
 
 public class Main {
+static class Persoana{
+    String name;
+    int varsta;
+
+    public Persoana(String name, int varsta) {
+        this.name = name;
+        this.varsta = varsta;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getVarsta() {
+        return varsta;
+    }
+
+    public void setVarsta(int varsta) {
+        this.varsta = varsta;
+    }
+}
+static Persoana dorel = new Persoana("Dorel", 8);
+static Persoana costel = new Persoana("Costel", 38);
 
     public static void main(String[] args) {
-        findIt(new int[]{20,1,-1,2,-2,3,3,5,5,1,2,4,20,4,-1,-2,5});
-        findIt(new int[]{1,1,2,-2,5,2,4,4,-1,-2,5});
-        findIt(new int[]{20,1,1,2,2,3,3,5,5,4,20,4,5});
-        findIt(new int[]{10});
-        findIt(new int[]{1,1,1,1,1,1,10,1,1,1,1});
-        findIt(new int[]{5,4,3,2,1,5,4,3,2,10,10});
-        findIt(new int[]{8,8,5,1,3,-2,1,3,5,-2,4,4,5});
-        findIt(new int[]{4,5,-2,1,3,1,3,5,-2,4,5});
 
+        System.out.println(printerError("aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbmmmmmmmmmmmmmmmmmmmxyz"));
+
+//        System.out.println(digPow(89, 1));
+//        System.out.println(digPow(92, 1));
+//        System.out.println(digPow(46288, 3));
+//        Predicate<String> p = s -> s.length()>4;
+//        String[] names = {"Mary", "Smith", "Scott", "Dorel", "Costel", "Ionel", "Geanina"};
+//        for (String e : names){
+//            System.out.println(p.test(e));
+//        }
+//        Arrays.stream(names).filter(p).forEach(System.out::println);
+//        Predicate<Persoana> i = q -> q.getVarsta()>18;
+//        Predicate<Persoana> n = k -> k.getName()
+//                .equalsIgnoreCase("dorel");
+//        Predicate<Persoana> vl = v -> v.getName().isEmpty();
+//        boolean a = p.test(costel.getName());
+//        System.out.println(a);
+//        System.out.println(vl.test(costel));
+//        System.out.println(i.test(dorel));
+//        System.out.println(n.test(dorel));
+    }
+
+    public static String printerError(String s) {
+        // your code
+
+        return s.replaceAll("[a-m]", "").length() + "/" + s.length();
+
+//        int dim = s.length();
+//        Pattern pattern = Pattern.compile("[^a-m]");
+//        Matcher matcher = pattern.matcher(s);
+//        int matches = (int) matcher.results().count();
+//        String res = matches + "/" + dim;
+//        return res;
+    }
+
+    public static boolean validatePin(String pin) {
+
+        return pin.matches("\\d{4}|\\d{6}");
+        // Your code here...
+//        if (pin.length() == 4 || pin.length() == 6){
+//            return pin.chars().allMatch(Character::isDigit);
+//        }
+//        return false;
+    }
+
+    public static boolean isValid(char[] walk) {
+        if (walk.length != 10) return false;
+
+        int x = 0, y = 0;
+        for (char c: walk) {
+            switch (c) {
+                case 'n': y++; break;
+                case 's': y--; break;
+                case 'w': x++; break;
+                case 'e': x--; break;
+            }
+        }
+
+        return x == 0 && y == 0;
+    }
+    public static long digPow(int n, int p) {
+        // your code
+        int sum = 0;
+        List<Integer> digits = new ArrayList<>();
+        collectDigits(n, digits);
+        for (int i: digits){
+            sum += (int) pow(i, p++);
+        }
+        return sum%n==0?sum/n:-1;
+
+    }
+
+    static void collectDigits(int num, List<Integer> digitList) {
+        if (num / 10 > 0) {
+            collectDigits(num / 10, digitList);
+        }
+        digitList.add(num % 10);
+    }
+
+    public static int duplicateCount(String text) {
+
+        int duplicates = 0;
+        String currentText = text.toLowerCase();
+        while (currentText.length() > 0) {
+
+            String firstLetter = currentText.substring(0,1);
+            System.out.println(firstLetter);
+            currentText = currentText.substring(1);
+            System.out.println(currentText);
+            if (currentText.contains(firstLetter)){
+                duplicates++;
+                currentText = currentText.replace(firstLetter, "");
+            }
+        }
+        return duplicates;
+
+        // Write your code here
+        // O functie anonima nu are:
+        // -nume
+        // - return type
+        // - access modifiers
+//
+//        return (int) text
+//                .toLowerCase()
+//                .chars()
+//                .boxed()
+//                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+//                .entrySet()
+//                .stream()
+//                .filter(entry -> entry.getValue() > 1)
+//                .count();
+
+
+//       text = text.toLowerCase();
+//        System.out.println(text);
+//       List<String> textList = Arrays.asList(text.split(""));
+//        Set<String> unice = new HashSet<String>(textList);
+//        System.out.println(unice);
+//        int duplicateCount = 0;
+//        for (String u : unice){
+//            if (Collections.frequency(textList, u) > 1){
+//                ++duplicateCount;
+//            }
+//        }
+//        System.out.println(duplicateCount);
+//        return duplicateCount;
     }
 
     public static int howOld(final String herOld) {
@@ -27,18 +177,27 @@ public class Main {
         return res;
     }
     public static int findIt(int[] a) {
-        int odd = 0;
-        int dim = a.length;
-
-        for (int i = 0; i < dim; i++){
-//            System.out.println("Odd este: " + odd);
-//            System.out.println("Element: " + e);
-//            System.out.println("XOR intre odd si e: " + (odd ^ e));
-            odd = odd ^ a[i];
-
-        }
-        System.out.println("Odd dupa XOR: " + odd);
-        return odd;
+        return Arrays.stream(a)
+                .boxed()
+                .collect(Collectors.groupingBy(Function.identity()))
+                .entrySet()
+                .stream()
+                .filter(e -> e.getValue().size() % 2 == 1)
+                .mapToInt(Map.Entry::getKey)
+                .findFirst()
+                .getAsInt();
+//        int odd = 0;
+//        int dim = a.length;
+//
+//        for (int i = 0; i < dim; i++){
+////            System.out.println("Odd este: " + odd);
+////            System.out.println("Element: " + e);
+////            System.out.println("XOR intre odd si e: " + (odd ^ e));
+//            odd = odd ^ a[i];
+//
+//        }
+//        System.out.println("Odd dupa XOR: " + odd);
+//        return odd;
 //        int dim = a.length;
 //        int count;
 //        int oddNum = 0;
