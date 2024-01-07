@@ -3,12 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import static java.lang.Math.max;
 import static java.lang.Math.pow;
 
 public class Main {
@@ -42,7 +37,7 @@ static Persoana costel = new Persoana("Costel", 38);
 
     public static void main(String[] args) {
 
-        System.out.println(printerError("aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbmmmmmmmmmmmmmmmmmmmxyz"));
+        hero(10,5);
 
 //        System.out.println(digPow(89, 1));
 //        System.out.println(digPow(92, 1));
@@ -62,6 +57,24 @@ static Persoana costel = new Persoana("Costel", 38);
 //        System.out.println(vl.test(costel));
 //        System.out.println(i.test(dorel));
 //        System.out.println(n.test(dorel));
+    }
+
+    public static boolean hero(int bullets, int dragons) {
+        // please code here
+        boolean a = bullets >= dragons << 1;
+        return (bullets/(dragons*2) > 0);
+    }
+
+    public static int findEvenIndex(int[] arr) {
+        // your code
+        int leftSum = 0;
+        int rightSum = Arrays.stream(arr).sum();;
+        for (int i = 0; i < arr.length; i++) {
+            rightSum -= arr[i];
+            if (leftSum == rightSum) return i;
+            leftSum += arr[i];
+            }
+        return -1;
     }
 
     public static String printerError(String s) {
